@@ -4,6 +4,8 @@
 #include <cmath>
 #include <cuda_runtime.h>
 
+using namespace std;
+
 __global__ void compute_tf_df(
     const uint32_t *docs, const int *doc_offsets, int num_docs,
     uint32_t *tf_counts, uint32_t *df_counts, int vocab_size)
@@ -59,7 +61,7 @@ void run_tfidf_on_gpu(const CorpusData &data) {
     const auto &flat_docs = data.flat_docs;
     const auto &doc_offsets = data.doc_offsets;
 
-    std::cout << "Launching GPU kernels... (docs=" << num_docs
+    cout << "Launching GPU kernels... (docs=" << num_docs
               << ", vocab=" << vocab_size << ")\n";
 
     uint32_t *d_docs, *d_tf, *d_df;
@@ -86,15 +88,15 @@ void run_tfidf_on_gpu(const CorpusData &data) {
     compute_tfidf<<<blocks, threads>>>(d_tf, d_df, d_tfidf, num_docs, vocab_size);
     cudaDeviceSynchronize();
 
-    std::vector<float> h_tfidf(num_docs * vocab_size);
+    vector<float> h_tfidf(num_docs * vocab_size);
     cudaMemcpy(h_tfidf.data(), d_tfidf, h_tfidf.size() * sizeof(float), cudaMemcpyDeviceToHost);
 
-    std::cout << "\n=== TF-IDF Matrix (first 10 terms per doc) ===\n";
+    cout << "\n=== TF-IDF Matrix (first 10 terms per doc) ===\n";
     for (int d = 0; d < num_docs; ++d) {
-        std::cout << "Doc " << d << ": [ ";
-        for (int t = 0; t < std::min(10, vocab_size); ++t)
-            std::cout << h_tfidf[d * vocab_size + t] << " ";
-        std::cout << "... ]\n";
+        cout << "Doc " << d << ": [ ";
+        for (int t = 0; t < min(10, vocab_size); ++t)
+            cout << h_tfidf[d * vocab_size + t] << " ";
+        cout << "... ]\n";
     }
 
     cudaFree(d_docs);
@@ -106,18 +108,18 @@ void run_tfidf_on_gpu(const CorpusData &data) {
 
 // -------- Main entry --------
 int main() {
-    std::cout << "Enter corpus folder path: ";
-    std::string folder;
-    std::getline(std::cin, folder);
+    cout << "Enter corpus folder path: ";
+    string folder;
+    getline(cin, folder);
 
     try {
         CorpusData data = preprocess_corpus(folder);
         run_tfidf_on_gpu(data);
     } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << "\n";
+        cerr << "Error: " << e.what() << "\n";
         return 1;
     }
 
-    std::cout << "\nTF-IDF complete.\n";
+    cout << "\nTF-IDF complete.\n";
     return 0;
 }
