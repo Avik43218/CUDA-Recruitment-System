@@ -1,4 +1,5 @@
 from faker import Faker
+import multiprocessing
 import random
 import string
 
@@ -22,13 +23,10 @@ class fakeResumeGenerator:
 
         companies = list(self.experience.keys())
         companies.pop(0)
-        print(companies)
         # {comapany: [duration, title, address]}
 
         degrees = list(self.education.keys())
         # {degree: [university, address, graduation year]}
-
-        print(self.experience)
 
         content = f"""
 {self.name.upper()}
@@ -96,9 +94,7 @@ def selectRandomData() -> dict:
         email = name_3 + "@" + random.choice(["gmail", "yahoo", "redditmail"]) + ".com"
 
         companies = list(random.choices(companies_pool, k=2))
-        print(companies)
         degrees = random.choice(degrees_pool)
-        print(degrees)
         languages = list(set(random.choices(languages_pool, k=3)))
         databases = random.choice(databases_pool)
         tools = list(set(random.choices(tools_pool, k=3)))
@@ -151,7 +147,7 @@ def selectRandomData() -> dict:
 
 if __name__ == "__main__":
         
-    count = 500
+    count = 1000
     for i in range(count):
 
         profile = selectRandomData()
@@ -160,7 +156,7 @@ if __name__ == "__main__":
         
         resume = gen.generateResume()
     
-        path = f"D:\\Programs\\Hackathon\\parallel-recruition-system\\sample-data\\applicant-{i}.txt"
+        path = f"D:\\Programs\\Hackathon\\parallel-recruition-system\\sample-data\\applicant-{i + 1}.txt"
         with open(path, 'w') as file:
             file.write(resume)
 
