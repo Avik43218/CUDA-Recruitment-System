@@ -1,5 +1,4 @@
 from faker import Faker
-import multiprocessing
 import random
 import string
 
@@ -71,10 +70,16 @@ def selectRandomData() -> dict:
 
         companies_pool = ["IBM", "Intel", "AWS", "TCS", "Infosys", "AMD", "Microsoft", "Google", "Apple", "Philips", "Samsung", "Flipkart"]
         degrees_pool = ["B. Tech in Computer Science", "B. Sc in Computer Science", "M. Tech in Computer Science", "M. Tech in Computer Science"]
-        languages_pool = ["Python", "Java", "JavaScript", "TypeScript", "XML", "HTML", "CSS", "C", "C++", "Rust", "C#", "Swift"]
-        databases_pool = ["MySQL", "PostgreSQL", "MongoDB", "NoSQL"]
-        tools_pool = ["Git", "Docker", "Replit", "Copilot", "npm"]
-        frameworks_pool = ["React", "Vue", "Node", "Flask", "Django", "FastAPI", "Angular"]
+        languages_pool = ["Python", "Java", "JavaScript", "TypeScript", "XML", "HTML", "CSS", "C", 
+                          "C++", "Rust", "C#", "Swift", "Go", "Ruby", "PHP", "Perl", "Matlab", "R", 
+                          "Scala", "Dart"]
+        databases_pool = ["MySQL", "PostgreSQL", "MongoDB", "SQLite"]
+        tools_pool = ["Git", "Docker", "Replit", "Kubernetes", "Jenkins", "Visual Studio", "AWS", 
+                      "Ansible", "Terraform", "Jira", "Postman", "GCP", "Azure", "Eclipse", 
+                      "IntelliJ", "Notion", "Slack", "Excel"]
+        frameworks_pool = ["React", "Vue", "Node", "Flask", "Django", "FastAPI", "Angular", "Spring", 
+                           "Spring Boot", "Express", "Laravel", "Dotnet", ".NET", "TensorFlow", 
+                           "PyTorch", "Keras", "Bootstrap"]
         universities_pool = ["University of California", "Indian Institute of Technology", "University of Melbourne", "University of Munich", "National Institute of Technology"]
         country_domains_pool = ["in", "us", 'uk', "au", "ca", "ge"]
         company_addr_pool = ["Bengaluru, India", "Sydney, Australia", "Florida, USA", "London, UK", "Stockholm, Sweden"]
